@@ -1,2 +1,2 @@
-# TraveJournal
-TravelJournal
+# JournalMe
+First Group Project!

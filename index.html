@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Travel Journal</title>
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Bootstrap CDN-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- Firebase Reference -->
+    <script src="https://www.gstatic.com/firebasejs/4.12.0/firebase.js"></script>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+
+    <!-- google fonts link -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+
+    <!-- moment js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.min.js"></script>
+
+</head>
+
+<body>
+    <!-- Main Container of all page -->
+    <div class="container">
+        <!-- the row for main container -->
+        <div class="row no-float">
+
+            <!-- the map 9 column container -->
+            <div class="col-lg-9 no-float" style="background-color: lightblue;" id="mapcontainer">
+
+                <!-- div for map -->
+                <div id="map" style="height: 100%;"></div>
+
+                <!-- create journal button code -->
+                <button id="btnAdd" class="btn createJournalButton" href="#">
+                    <h1>ADD JOURNAL</h1>
+                </button>
+                <!-- Toggle full view button -->
+                <button id="btnTog" class="btn" href="#">
+                    >
+                </button>
+                <!-- .createJournalWindow window -->
+                <div class="createJournalWindow" style="border-radius: 20px;" href="#">
+                    <div class="col-lg-12">
+
+
+                        <!-- .display-div inside create journal widnow #form-div for form -->
+                        <div class="display-div" id="display-form-div">
+                            <!-- form starts here -->
+                            <form class="add-journal">
+
+                                <!-- title inputbox -->
+                                <div class="form-group">
+                                    <label for="input-title">Title</label>
+                                    <input type="text" class="form-control" id="input-title" placeholder="Title">
+                                </div>
+
+                                 <!-- country Inputbox -->
+                                 <!-- <div class="form-group"> -->
+                                        <!-- <label for="input-country">Country</label> -->
+                                        <input type="hidden" class="form-control" id="input-country" placeholder="country">
+                                    <!-- </div> -->
+
+
+                                <!-- State Inputbox -->
+                                <!-- <div class="form-group"> -->
+                                    <!-- <label for="input-state">State</label> -->
+                                    <input type="hidden" class="form-control" id="input-state" placeholder="State">
+                                <!-- </div> -->
+
+                                <!-- city inputbox -->
+                                <!-- <div class="form-group"> -->
+                                    <!-- <label for="input-city">City</label> -->
+                                    <input type="hidden" class="form-control" id="input-city" placeholder="City">
+                                <!-- </div> -->
+
+                                <!-- lat inputbox -->
+                                <!-- <div class="form-group"> -->
+                                    <!-- <label for="input-lon">Longitutde</label> -->
+                                    <input type="hidden" class="form-control" id="input-lon" placeholder="Longitude">
+                                <!-- </div> -->
+
+                                <!-- lat input -->
+                                <!-- <div class="form-group"> -->
+                                    <!-- <label for="input-lat">Latitude</label> -->
+                                    <input type="hidden" class="form-control" id="input-lat" placeholder="Latitude">
+                                <!-- </div> -->
+
+
+                                <!-- temp input -->
+                                <!-- <div class="form-group"> -->
+                                    <!-- <label for="input-temp">Temprature</label> -->
+                                    <input type="hidden" class="form-control" id="input-temp" placeholder="Temprature">
+                                <!-- </div> -->
+
+                                <!-- weather condition input -->
+                                <!-- <div class="form-group"> -->
+                                    <!-- <label for="input-w-conditio">Weather Condition</label> -->
+                                    <input type="hidden" class="form-control" id="input-w-condition" placeholder="Weather Condition">
+                                <!-- </div> -->
+
+                                <!-- contents text area -->
+                                <div class="form-group">
+                                    <label for="input-content">Contents</label>
+                                    <textarea class="form-control" id="input-content" rows="10"></textarea>
+                                </div>
+                                <div class="text-danger" id="alert" style="display: none; padding: 10px;">Please fill the form correctly.</div>
+
+                                <!-- submit button -->
+                                <button type="button" class="btn btn-primary" id='submit-button'>Submit</button>
+
+                                <!-- cancel button -->
+                                <button type="button" class="btn btn-danger" id='cancel-button'>Cancel</button>
+                            </form> 
+                        </div>
+
+                        <!-- .display-div changed id from entry-div to display-journal for showing contents of the journal -->
+                        <div class="display-div" id="display-journal">
+                            <!-- guessing this is here for div debug?  ck - let me know -->
+                            <h4>
+                                <div id="view-titleX"></div>
+                            </h4>
+                            <div id="view-date-timeX"></div>
+                            <p class="display-weather">Weather Condition:
+                                <div id="view-weather-tempX">, </div>
+                                <div id="view-weather-conditionX"></div>
+                            </p>
+                            <p class="display-location">Location:
+                                <div><span id="view-stateX"></span>, 
+                                <span id="view-cityX"></span>, 
+                                <span id="view-countryX"></span.></div>
+                                <div id="view-latX"></div>
+                                <div id="view-lonX"></div>
+                            </p>
+                            
+                            <p class="display-content">Contents:
+                                <div id="view-contentX"></div>
+                            </p>
+                            <!-- cancel button -->
+                            <button type="button" class="btn btn-danger" id='cancel-button-journal'>Close</button>
+                        </div>
+                            <!-- end of view journal -->
+
+                    </div>
+                </div>
+                <!-- end of create journal window -->
+            </div>
+
+            <!-- Journal column -->
+            <div class="col-md-3 no-float" style="background-color: grey;" id="listofJournalsD">
+                <div id="listOfJournals" class="pre-scrollable scroll-full">
+                    <!-- style="padding:0px;" this is now handled by css - ck  -->
+                </div>
+            </div>
+        </div>
+    </div>
+   
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAV5nuOTlmfsvRYZpn--64G27L12SRtYkI&callback=initMap"></script>
+    <script src="assets/javascript/map.js"></script>
+    <script src="assets/javascript/app.js"></script>
+    <script src="assets/javascript/geoWeather.js"></script>
+</body>
+
+</html>
